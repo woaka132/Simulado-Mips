@@ -20,6 +20,46 @@
     </div>
     <button class="memory"></button>
     <div class="mostrarMemory" id="mostrarmemory"></div>
+    <div class="memoryIns" id="memoriaInstr"></div>
+    <div class="mostrarRC" id="mostrarRC"></div>
+    <div class="memoriaRomM">
+        <div>
+            <div class="parte4"></div>
+            <div class="parte4"></div>
+            <div class="parte4"></div>
+            <div class="line" style="display:flex;">
+                <div class="parte1" id="IF">IF</div>
+                <div class="parte3">ID</div>
+            </div>
+        </div>
+        <div>
+            <div class="parte2">WB</div>
+            <div class="parte2">M</div>
+            <div class="parte2">EX</div> 
+            <div class="line" style="display:flex;">
+                <div class="parte1">ID</div>
+                <div class="parte3">EX</div>
+            </div>
+        </div>
+        <div>
+            <div class="parte4"></div>
+            <div class="parte2">WB</div>
+            <div class="parte2">M</div>
+            <div class="line" style="display:flex;">
+                <div class="parte1">EX</div>
+                <div class="parte3">MEM</div>
+            </div>
+        </div>
+        <div>
+            <div class="parte4"></div>
+            <div class="parte4"></div>
+            <div class="parte2">WB</div>
+            <div class="line" style="display:flex;">
+                <div class="parte1">MEM</div>
+                <div class="parte3">WB</div>
+            </div>
+        </div>  
+    </div>
     <script>
     const  dibujar = document.getElementById("mostrar");
     const btn = document.getElementById("btn");
@@ -27,37 +67,99 @@
     const momemory=document.getElementById("mostrarmemory");
     const instrLeer = document.getElementById("instrAdd");
     const MostInstr = document.getElementById("MostInstr");
+    const memoInstr = document.getElementById("memoriaInstr");
+    const IF = document.getElementById("IF");
+    var mostrarRC = document.getElementById("mostrarRC");
+    memoriaInstr
     
     var contenido ="";
     var bloque="";
     var memoria="";
     var mostrar1="";
+    var memoryInstru = "";
     var contInst = 0;
     var cadena;
+    var texto="";
+    var valoresAceptados = /^[0-9]+$/;
 
-    for(var i=0; i<100;i++){
-        memoria = memoria + "0x000000" + "<br>";   
+    for(var i=0; i<32;i++){
+        memoria = memoria + "0x00000" + "<br>";   
         momemory.innerHTML = memoria;
     }
 
+    IF.addEventListener('click',function(){
+        
+        if(contInst != 0){    
+            mostrarRC.classList.add("show");
+            cadena = memoryInstru.split('<br>');
+            for(var i=0; i<cadena.length-1;i++){
+                texto =texto + "Ciclo"+i+":<br>";
+                texto =texto + cadena[i].substring(0,6)+"<br>";
+            }
+            mostrarRC.innerHTML = texto;
+        }else{
+            alert("Tienes que agregar una instrucion");            
+        }   
+    })
+    
     btn.addEventListener('click',function(){
         if(instrLeer.value!=""){
             cadena = (instrLeer.value).split(' ');
-            if(cadena[0] == 'add' || cadena[0] == 'rest' || cadena[0] == 'lw' || cadena[0] == 'sw'|| cadena[0] == 'jump'){
-                contInst ++;
-                mostrar1 = mostrar1 + ">" + instrLeer.value +  "<br>";
-                MostInstr.innerHTML = mostrar1;
-                instrLeer.value = "";
-               
-            }else{
-                alert('Funcion no es valida');
+                
+            switch(cadena[0]){
+                    case "add":    
+                        if(cadena.length == 4){
+                            if( cadena[1].length == 5 && cadena[1].match(valoresAceptados) && cadena[2].length == 5 && cadena[2].match(valoresAceptados) && cadena[3].length == 5 && cadena[3].match(valoresAceptados)){
+                                memoryInstru =memoryInstru+ "000000"+ cadena[1] + cadena[2] + cadena[3] +"00000100000"+"<br>" ;
+                                mostrar();
+                            }else{
+                                alert("Direcciones Incorrectas");
+                            }
+                       
+                        }else{
+                            alert("Formato de la funcion add incorrecto");
+                        }
+                    break;
+                    case "rest":
+                    if(cadena.length == 4){
+                            if( cadena[1].length == 5 && cadena[1].match(valoresAceptados) && cadena[2].length == 5 && cadena[2].match(valoresAceptados) && cadena[3].length == 5 && cadena[3].match(valoresAceptados)){
+                                memoryInstru =memoryInstru+ "000000"+ cadena[1] + cadena[2] + cadena[3] +"00000100010"+"<br>" ;
+                                mostrar();
+                            }else{
+                                alert("Direcciones Incorrectas");
+                            }
+                       
+                        }else{
+                            alert("Formato de la funcion rest incorrecto");
+                        }
+                    break;
+                    case "lw":
+                        mostrar();
+                        memoryInstru = memoryInstru+"100011"+ "<br>";
+                        break; 
+                    case "sw":
+                        mostrar();
+                        memoryInstru = memoryInstru+"101011"+ "<br>";
+                        break
+                    case "jump":
+                        mostrar();
+                        break
+                    default:
+                        alert("Instrucion no valida")
             }
-
+            memoInstr.innerHTML = memoryInstru;
         }else{
             alert('El campo no puede estar vacio');
         }
 
     })
+
+    function mostrar(){
+        contInst ++;
+        mostrar1 = mostrar1 + ">" + instrLeer.value +  "<br>";
+        MostInstr.innerHTML = mostrar1;
+        instrLeer.value = "";
+    }
 
     btn1.addEventListener('click',function(){
         if(contInst != 0){    
@@ -77,6 +179,11 @@
                 dibujar.innerHTML=contenido; 
             }
             contenido = "";
+            cadena = memoryInstru.split('<br>');
+            for(var i=0; i<cadena.length-1;i++){
+                console.log(cadena);
+                console.log(cadena[i]);
+            }
         }else{
             alert("Tienes que agregar una instrucion");            
         }   
