@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="contenedor">
+        <div class="instruciones">
+            <div class="text"></div>
+            <input type="text" class="instr">
+            <button class="btn" id="btn"></button>
+            
+        </div>
+        <div class="mostrar" id="mostrar">
+            <ul class="lista">
+                <li class='bloque1'></li>
+                <li class='bloque2'></li>
+                <li class='bloque3'></li>
+                <li class='bloque4'></li>
+                <li class='bloque5'></li>
+            </ul>
+            <ul class="lista">
+                <li class='blanco'></li>
+                <li class='bloque1'></li>
+                <li class='bloque2'></li>
+                <li class='bloque3'></li>
+                <li class='bloque4'></li>
+                <li class='bloque5'></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+    const  dibujar = document.getElementById("mostrar");
+    const btn = document.getElementById("btn")
+    var contenido ="";
+    var bloque="";
+    btn.addEventListener('click',function(){
+            for(var i=1; i<6;i++){
+            bloque="<div class='bloque"+i+"'></div>";
+            contenido = contenido + bloque;  
+            }
+            dibujar.innerHTML=contenido;
+
+        contenido = contenido + "<br>";
+        /*
+        dibujar.innerHTML="<div class='bloque2'></div>"
+        dibujar.innerHTML="<div class='bloque3'></div>"
+        dibujar.innerHTML="<div class='bloque4'></div>"
+        dibujar.innerHTML="<div class='bloque5'></div>"*/
+    })
+    </script>
+</body>
+</html>
