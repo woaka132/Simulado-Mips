@@ -10,48 +10,76 @@
 <body>
     <div class="contenedor">
         <div class="instruciones">
-            <div class="text"></div>
-            <input type="text" class="instr">
+            <div class="text" id="MostInstr"></div>
+            <input type="text" class="instr" id="instrAdd">
             <button class="btn" id="btn"></button>
-            
+            <button class="btn" id="btn1"></button>
         </div>
         <div class="mostrar" id="mostrar">
-            <ul class="lista">
-                <li class='bloque1'></li>
-                <li class='bloque2'></li>
-                <li class='bloque3'></li>
-                <li class='bloque4'></li>
-                <li class='bloque5'></li>
-            </ul>
-            <ul class="lista">
-                <li class='blanco'></li>
-                <li class='bloque1'></li>
-                <li class='bloque2'></li>
-                <li class='bloque3'></li>
-                <li class='bloque4'></li>
-                <li class='bloque5'></li>
-            </ul>
         </div>
     </div>
-
+    <button class="memory"></button>
+    <div class="mostrarMemory" id="mostrarmemory"></div>
     <script>
     const  dibujar = document.getElementById("mostrar");
-    const btn = document.getElementById("btn")
+    const btn = document.getElementById("btn");
+    const btn1 = document.getElementById("btn1");
+    const momemory=document.getElementById("mostrarmemory");
+    const instrLeer = document.getElementById("instrAdd");
+    const MostInstr = document.getElementById("MostInstr");
+    
     var contenido ="";
     var bloque="";
-    btn.addEventListener('click',function(){
-            for(var i=1; i<6;i++){
-            bloque="<div class='bloque"+i+"'></div>";
-            contenido = contenido + bloque;  
-            }
-            dibujar.innerHTML=contenido;
+    var memoria="";
+    var mostrar1="";
+    var contInst = 0;
+    var cadena;
 
-        contenido = contenido + "<br>";
-        /*
-        dibujar.innerHTML="<div class='bloque2'></div>"
-        dibujar.innerHTML="<div class='bloque3'></div>"
-        dibujar.innerHTML="<div class='bloque4'></div>"
-        dibujar.innerHTML="<div class='bloque5'></div>"*/
+    for(var i=0; i<100;i++){
+        memoria = memoria + "0x000000" + "<br>";   
+        momemory.innerHTML = memoria;
+    }
+
+    btn.addEventListener('click',function(){
+        if(instrLeer.value!=""){
+            cadena = (instrLeer.value).split(' ');
+            if(cadena[0] == 'add' || cadena[0] == 'rest' || cadena[0] == 'lw' || cadena[0] == 'sw'|| cadena[0] == 'jump'){
+                contInst ++;
+                mostrar1 = mostrar1 + ">" + instrLeer.value +  "<br>";
+                MostInstr.innerHTML = mostrar1;
+                instrLeer.value = "";
+               
+            }else{
+                alert('Funcion no es valida');
+            }
+
+        }else{
+            alert('El campo no puede estar vacio');
+        }
+
+    })
+
+    btn1.addEventListener('click',function(){
+        if(contInst != 0){    
+            for(var u=0; u<contInst; u++){
+                console.log(i);
+                console.log(contInst);
+                contenido = contenido + "<ul class='lista'>";    
+                    for(var j=0; j<u;j++){
+                        bloque="<div class='blanco'></div>";
+                        contenido = contenido + bloque;  
+                    }
+                    for(var i=1; i<6;i++){   
+                        bloque="<div class='bloque"+i+"'></div>";
+                        contenido = contenido + bloque;  
+                    }                 
+                contenido = contenido + "</ul>";
+                dibujar.innerHTML=contenido; 
+            }
+            contenido = "";
+        }else{
+            alert("Tienes que agregar una instrucion");            
+        }   
     })
     </script>
 </body>
