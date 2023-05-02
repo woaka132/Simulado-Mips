@@ -29,7 +29,7 @@
             <div class="parte4"></div>
             <div class="line" style="display:flex;">
                 <div class="parte1" id="IF">IF</div>
-                <div class="parte3">ID</div>
+                <div class="parte3" id="ID">ID</div>
             </div>
         </div>
         <div>
@@ -37,8 +37,8 @@
             <div class="parte2">M</div>
             <div class="parte2">EX</div> 
             <div class="line" style="display:flex;">
-                <div class="parte1">ID</div>
-                <div class="parte3">EX</div>
+                <div class="parte1" id="ID_2">ID</div>
+                <div class="parte3" id="EX_1">EX</div>
             </div>
         </div>
         <div>
@@ -46,8 +46,8 @@
             <div class="parte2">WB</div>
             <div class="parte2">M</div>
             <div class="line" style="display:flex;">
-                <div class="parte1">EX</div>
-                <div class="parte3">MEM</div>
+                <div class="parte1" id="EX_2">EX</div>
+                <div class="parte3" id="MEN_1">MEM</div>
             </div>
         </div>
         <div>
@@ -55,7 +55,7 @@
             <div class="parte4"></div>
             <div class="parte2">WB</div>
             <div class="line" style="display:flex;">
-                <div class="parte1">MEM</div>
+                <div class="parte1" id="MEN_2">MEM</div>
                 <div class="parte3">WB</div>
             </div>
         </div>  
@@ -64,14 +64,12 @@
     const  dibujar = document.getElementById("mostrar");
     const btn = document.getElementById("btn");
     const btn1 = document.getElementById("btn1");
-    const momemory=document.getElementById("mostrarmemory");
+    var momemory=document.getElementById("mostrarmemory");
     const instrLeer = document.getElementById("instrAdd");
     const MostInstr = document.getElementById("MostInstr");
     const memoInstr = document.getElementById("memoriaInstr");
-    const IF = document.getElementById("IF");
     var mostrarRC = document.getElementById("mostrarRC");
-    memoriaInstr
-    
+
     var contenido ="";
     var bloque="";
     var memoria="";
@@ -80,27 +78,16 @@
     var contInst = 0;
     var cadena;
     var texto="";
+    var texto1="";
     var valoresAceptados = /^[0-9]+$/;
+    var lose =0;
 
     for(var i=0; i<32;i++){
         memoria = memoria + "0x00000" + "<br>";   
         momemory.innerHTML = memoria;
     }
 
-    IF.addEventListener('click',function(){
-        
-        if(contInst != 0){    
-            mostrarRC.classList.add("show");
-            cadena = memoryInstru.split('<br>');
-            for(var i=0; i<cadena.length-1;i++){
-                texto =texto + "Ciclo"+i+":<br>";
-                texto =texto + cadena[i].substring(0,6)+"<br>";
-            }
-            mostrarRC.innerHTML = texto;
-        }else{
-            alert("Tienes que agregar una instrucion");            
-        }   
-    })
+
     
     btn.addEventListener('click',function(){
         if(instrLeer.value!=""){
@@ -143,6 +130,7 @@
                         break
                     case "jump":
                         mostrar();
+                        memoryInstru = memoryInstru+"000010"+ "<br>";
                         break
                     default:
                         alert("Instrucion no valida")
@@ -164,8 +152,6 @@
     btn1.addEventListener('click',function(){
         if(contInst != 0){    
             for(var u=0; u<contInst; u++){
-                console.log(i);
-                console.log(contInst);
                 contenido = contenido + "<ul class='lista'>";    
                     for(var j=0; j<u;j++){
                         bloque="<div class='blanco'></div>";
@@ -179,15 +165,63 @@
                 dibujar.innerHTML=contenido; 
             }
             contenido = "";
+            ////////////////////////////////////
+            texto="";
+            cadMen="";    
             cadena = memoryInstru.split('<br>');
+            aux = (memoryd.innerHTML).split('<br>');
             for(var i=0; i<cadena.length-1;i++){
-                console.log(cadena);
-                console.log(cadena[i]);
+                switch(cadena[i].substring(0,6)){
+                    case "000000":
+                        if(cadena[i].substring(21,32) == "00000100000"){
+                                aux3=0;
+                                aux4=0;
+                                div=0;
+                                aux3 = convterDec(cadena[i].substring(6,11));
+                                aux4 = convterDec(cadena[i].substring(11,16));
+                                lose = convterDec(cadena[i].substring(16,21));
+                                aux5 = aux3 + aux4;
+                                cadaxu = convterBina(aux5);
+                                aux[lose] = "0x"+cadaxu ;                                                  
+                        }else{
+                            aux3=0;
+                                aux4=0;
+                                texto = texto + "ALU:110";
+                                aux3 = convterDec(cadena[i].substring(6,11));
+                                aux4 = convterDec(cadena[i].substring(11,16));
+                                lose = convterDec(cadena[i].substring(16,21));
+                                aux5 = aux3 - aux4;
+                                    if(aux5<0){
+                                        aux5 = 0
+                                    }
+                                cadaxu = convterBina(aux5);
+                                aux[lose] = "0x"+cadaxu ;
+                        }   
+                    break;
+                    case "100011":
+                        texto =texto + "011110000<br>";
+                    break;
+                    case "101011":
+                        texto =texto + "010001000<br>";   
+                    break; 
+                    case "000010":
+                        texto =texto + "000000101<br>";    
+                    break
+                    default:
+                        texto = texto + "ERORR" ;  
+                    break;  
+                }
             }
+            for(var l=0; l<32;l++){
+                texto1 = texto1 + aux[l] + "<br>";
+            }     
+            momemory.innerHTML = texto1;
+                                    //////////////////////////////////
         }else{
             alert("Tienes que agregar una instrucion");            
         }   
     })
     </script>
+    <script src="botons.js"></script>
 </body>
 </html>

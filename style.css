@@ -142,6 +142,7 @@
     width: 500px;
     transition: all;
     transition-duration: 1s;
+    overflow: auto;
 }
 
 .show{
