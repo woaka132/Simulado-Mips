@@ -10,56 +10,81 @@
 <body>
     <div class="contenedor">
         <div class="instruciones">
+            <h2>Instrucciones</h2>
             <div class="text" id="MostInstr"></div>
-            <input type="text" class="instr" id="instrAdd">
-            <button class="btn" id="btn"></button>
-            <button class="btn" id="btn1"></button>
+            <div id="ingresoDatos">
+                <input type="text" class="instr" id="instrAdd">
+                <button class="btn" id="btn">↑</button>
+            </div>
+            
+
+            <button class="btn" id="btn1">Ejecutar</button>
         </div>
-        <div class="mostrar" id="mostrar">
+
+        <div id="orden">
+            
+            <div class="memoriaRomM">
+                <div class="procesos"></div>
+                <div class="memoriaReg">
+                    <div class="parte4"></div>
+                    <div class="parte4"></div>
+                    <div class="parte4"></div>
+                    <div class="line" style="display:flex;">
+                        <div class="parte1" id="IF">IF</div>
+                        <div class="parte3">ID</div>
+                    </div>
+                </div>
+                <div class="procesos"></div>
+                <div class="memoriaReg">
+                    <div class="parte2">WB</div>
+                    <div class="parte2">M</div>
+                    <div class="parte2">EX</div> 
+                    <div class="line" style="display:flex;">
+                        <div class="parte1">ID</div>
+                        <div class="parte3">EX</div>
+                    </div>
+                </div>
+                <div class="procesos"></div>
+                <div class="memoriaReg">
+                    <div class="parte4"></div>
+                    <div class="parte2">WB</div>
+                    <div class="parte2">M</div>
+                    <div class="line" style="display:flex;">
+                        <div class="parte1">EX</div>
+                        <div class="parte3">MEM</div>
+                    </div>
+                </div>
+                <div class="procesos"></div>
+                <div class="memoriaReg">
+                    <div class="parte4"></div>
+                    <div class="parte4"></div>
+                    <div class="parte2">WB</div>
+                    <div class="line" style="display:flex;">
+                        <div class="parte1">MEM</div>
+                        <div class="parte3">WB</div>
+                    </div>
+                </div>  
+                <div class="procesos"></div>
+            </div>
+            <div id ="orden2">
+                <div id="tituloRes">
+                    <h2>Resultados</h2>
+                </div>
+                <div id="tituloRes2">
+                    <h2>Resultado 1</h2>
+                    <h2>Resultado 2</h2>
+                </div>
+                <div id="resultados2">
+                    <div class="memoryIns" id="memoriaInstr"></div>
+                    <div class="mostrarMemory" id="mostrarmemory"></div>
+                </div>
+                <button class="memory">Memoria</button>
+                
+            </div>
         </div>
     </div>
-    <button class="memory"></button>
-    <div class="mostrarMemory" id="mostrarmemory"></div>
-    <div class="memoryIns" id="memoriaInstr"></div>
     <div class="mostrarRC" id="mostrarRC"></div>
-    <div class="memoriaRomM">
-        <div>
-            <div class="parte4"></div>
-            <div class="parte4"></div>
-            <div class="parte4"></div>
-            <div class="line" style="display:flex;">
-                <div class="parte1" id="IF">IF</div>
-                <div class="parte3">ID</div>
-            </div>
-        </div>
-        <div>
-            <div class="parte2">WB</div>
-            <div class="parte2">M</div>
-            <div class="parte2">EX</div> 
-            <div class="line" style="display:flex;">
-                <div class="parte1">ID</div>
-                <div class="parte3">EX</div>
-            </div>
-        </div>
-        <div>
-            <div class="parte4"></div>
-            <div class="parte2">WB</div>
-            <div class="parte2">M</div>
-            <div class="line" style="display:flex;">
-                <div class="parte1">EX</div>
-                <div class="parte3">MEM</div>
-            </div>
-        </div>
-        <div>
-            <div class="parte4"></div>
-            <div class="parte4"></div>
-            <div class="parte2">WB</div>
-            <div class="line" style="display:flex;">
-                <div class="parte1">MEM</div>
-                <div class="parte3">WB</div>
-            </div>
-        </div>  
-    </div>
+    <div class="mostrar" id="mostrar"></div>
     <script>
     const  dibujar = document.getElementById("mostrar");
     const btn = document.getElementById("btn");
