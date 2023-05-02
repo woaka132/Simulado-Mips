@@ -24,13 +24,13 @@
         <div id="orden">
             
             <div class="memoriaRomM">
-                <div class="procesos" id="mostrar"></div>
-                <div class="memoriaReg">
+                <div class="procesos" id="mostrar" style="position: absolute;"></div>
+                <div class="memoriaReg" style="background-color: aliceblue; z-index: 2;">
                     <div class="parte4"></div>
                     <div class="parte4"></div>
                     <div class="parte4"></div>
                     <div class="line" style="display:flex;">
-                        <div class="parte1" id="IF">IF</div>
+                        <div class="parte1" id="IF" style="margin-left:150px;">IF</div>
                         <div class="parte3" id="ID">ID</div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                     <div class="parte2">WB</div>
                     <div class="line" style="display:flex;">
                         <div class="parte1" id="MEN_2">MEM</div>
-                        <div class="parte3">WB</div>
+                        <div class="parte3" id="WB">WB</div>
                     </div>
                 </div>  
                 <div class="procesos"></div>
@@ -103,7 +103,7 @@
     var cadena;
     var texto="";
     var texto1="";
-    var valoresAceptados = /^[0-9]+$/;
+    var valoresAceptados = /^[0-1]+$/;
     var lose =0;
 
     for(var i=0; i<32;i++){
@@ -145,16 +145,39 @@
                         }
                     break;
                     case "lw":
-                        mostrar();
-                        memoryInstru = memoryInstru+"100011"+ "<br>";
+                    if(cadena.length == 4){
+                            if( cadena[1].length == 5 && cadena[1].match(valoresAceptados) && cadena[2].length == 5 && cadena[2].match(valoresAceptados) && cadena[3].length == 5 && cadena[3].match(valoresAceptados)){
+                                memoryInstru = memoryInstru+"100011" + cadena[1] + cadena[2] +"00000000000"+ cadena[3] +"<br>" ;
+                                mostrar();
+                            }else{
+                                alert("Direcciones Incorrectas");
+                            }
+                       
+                        }else{
+                            alert("Formato de la funcion lw incorrecto");
+                        }
                         break; 
                     case "sw":
-                        mostrar();
-                        memoryInstru = memoryInstru+"101011"+ "<br>";
+                    if(cadena.length == 4){
+                            if( cadena[1].length == 5 && cadena[1].match(valoresAceptados) && cadena[2].length == 5 && cadena[2].match(valoresAceptados) && cadena[3].length == 5 && cadena[3].match(valoresAceptados)){
+                                memoryInstru = memoryInstru+"101011" + cadena[1] + cadena[2] +"00000000000"+ cadena[3] +"<br>" ;
+                                mostrar();
+                            }else{
+                                alert("Direcciones Incorrectas");
+                            }
+                       
+                        }else{
+                            alert("Formato de la funcion lw incorrecto");
+                        }
+                        break; 
                         break
-                    case "jump":
-                        mostrar();
-                        memoryInstru = memoryInstru+"000010"+ "<br>";
+                    case "jmp":
+                            if( cadena[1].length == 5 && cadena[1].match(valoresAceptados)){
+                                memoryInstru = memoryInstru + "000010" +"000000000000000000000"+ cadena[1] + "<br>" ;
+                                mostrar();
+                            }else{
+                                alert("Direcciones Incorrectas");
+                            }
                         break
                     default:
                         alert("Instrucion no valida")
@@ -210,7 +233,6 @@
                         }else{
                             aux3=0;
                                 aux4=0;
-                                texto = texto + "ALU:110";
                                 aux3 = convterDec(cadena[i].substring(6,11));
                                 aux4 = convterDec(cadena[i].substring(11,16));
                                 lose = convterDec(cadena[i].substring(16,21));
@@ -226,7 +248,10 @@
                         texto =texto + "011110000<br>";
                     break;
                     case "101011":
-                        texto =texto + "010001000<br>";   
+                                aux3=0;
+                                aux4=0;
+                                aux4 = convterDec(cadena[i].substring(11,16));                        
+                                aux[aux4] = "0x"+cadena[i].substring(6,11);  
                     break; 
                     case "000010":
                         texto =texto + "000000101<br>";    

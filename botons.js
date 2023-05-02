@@ -5,6 +5,7 @@ const EX_1 = document.getElementById("EX_1");
 const EX_2 = document.getElementById("EX_2");
 const MEN_1 = document.getElementById("MEN_1");
 const MEN_2 = document.getElementById("MEN_2");
+const WB = document.getElementById("WB");
 var memoryd = document.getElementById("mostrarmemory");
 
 var aux="";
@@ -142,13 +143,16 @@ EX_2.addEventListener('click',function(){
                     }   
                 break;
                 case "100011":
-                    texto =texto + "011110000<br>";
+                    texto = texto + "ALU:010";
+                    texto = texto + " - DirecionMemoria:" + cadena[i].substring(26,31) + "<br>";
                 break;
                 case "101011":
-                    texto =texto + "010001000<br>";   
+                    texto = texto + "ALU:010";
+                    texto = texto + " - DirecionMemoria:" + cadena[i].substring(26,31) + "<br>"; 
                 break; 
                 case "000010":
-                    texto =texto + "000000101<br>";    
+                    texto = texto + "ALU:111";
+                    texto = texto + " - DirecionMemoria:" + cadena[i].substring(26,31) + "<br>";   
                 break
                 default:
                     texto = texto + "ERORR" ;  
@@ -198,13 +202,13 @@ MEN_1.addEventListener('click',function(){
                     }   
                 break;
                 case "100011":
-                    texto =texto + "011110000<br>";
+                    texto = texto + " - DirecionMemoria:" + cadena[i].substring(26,31)+ "- Escribir en registro" +  cadena[i].substring(21 , 26)+ "<br>"; 
                 break;
                 case "101011":
-                    texto =texto + "010001000<br>";   
+                    texto = texto + " - DirecionMemoria:" + cadena[i].substring(26,31)+ "- Escribir en memoria" +  cadena[i].substring(21 , 26)+ "<br>"; 
                 break; 
                 case "000010":
-                    texto =texto + "000000101<br>";    
+                    texto = texto + " - DirecionMemoria: 4 + " + cadena[i].substring(26,31) + "<br>";   
                 break
                 default:
                     texto = texto + "ERORR" ;  
@@ -216,6 +220,71 @@ MEN_1.addEventListener('click',function(){
         alert("Tienes que agregar una instrucion");            
     }   
 })
+
+MEN_2.addEventListener('click',function(){
+    if(contInst != 0){
+        texto="";
+        cadMen="";    
+        mostrarRC.classList.add("show");
+        cadena = memoryInstru.split('<br>');
+        for(var i=0; i<cadena.length-1;i++){
+            texto =texto + "Ciclo"+(i+3)+":<br>";
+            switch(cadena[i].substring(0,6)){
+                case "000000":
+                   texto = texto + "MentoReg:0 - MenRead:1<br>"
+                break;
+                case "100011":
+                    texto = texto + "MentoReg:1 - MenRead:1 - RegWrite:1 - MenWrite:0<br>"
+                break;
+                case "101011":
+                    texto = texto + "MentoReg:0- MenRead:0 - RegWrite:0 - MenWrite:1<br>"  
+                break; 
+                case "000010":
+                    texto = texto + "MentoReg:0- MenRead:0 - RegWrite:0 - MenWrite:0<br>"
+                break
+                default:
+                    texto = texto + "ERORR" ;  
+                break;  
+            }
+        }
+        mostrarRC.innerHTML =  texto;
+    }else{
+        alert("Tienes que agregar una instrucion");            
+    }   
+})
+
+WB.addEventListener('click',function(){
+    if(contInst != 0){
+        texto="";
+        cadMen="";    
+        mostrarRC.classList.add("show");
+        cadena = memoryInstru.split('<br>');
+        for(var i=0; i<cadena.length-1;i++){
+            texto =texto + "Ciclo"+(i+4)+":<br>";
+            switch(cadena[i].substring(0,6)){
+                case "000000":
+                   texto = texto + "MentoReg:0 - MenRead:1<br>"
+                break;
+                case "100011":
+                    texto = texto + "MentoReg:1 - MenRead:1 - RegWrite:1 - MenWrite:0<br>"
+                break;
+                case "101011":
+                    texto = texto + "MentoReg:0- MenRead:0 - RegWrite:0 - MenWrite:1<br>"  
+                break; 
+                case "000010":
+                    texto = texto + "MentoReg:0- MenRead:0 - RegWrite:0 - MenWrite:0<br>"
+                break
+                default:
+                    texto = texto + "ERORR" ;  
+                break;  
+            }
+        }
+        mostrarRC.innerHTML =  texto;
+    }else{
+        alert("Tienes que agregar una instrucion");            
+    }   
+})
+
 
 
 function convterDec(cadena_Le){
